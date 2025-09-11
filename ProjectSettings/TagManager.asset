@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
-    uniqueID: 188711625
+  - name: Room
+    uniqueID: 1203638505
+    locked: 0
+  - name: Station
+    uniqueID: 880505519
     locked: 0
