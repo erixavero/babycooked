@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MilkStation : MonoBehaviour
+public class DiaperStation : MonoBehaviour
 {
-    public static MilkStation instance;
+    public static DiaperStation instance;
     void Awake()
     {
         instance = this;
@@ -12,12 +12,12 @@ public class MilkStation : MonoBehaviour
     void OnEnable()
     {
         Debug.Log("on enable");
-        Camera.main.transparencySortAxis = new Vector3(0, 0, 1); // Example: Y axis
+        Camera.main.transparencySortAxis = new Vector3(0, 0, 1);
     }
 
     void OnDisable()
     {
         Debug.Log("on disable");
-        Camera.main.transparencySortAxis = new Vector3(0, 1, 0); // Reset to default
+        Camera.main.transparencySortAxis = new Vector3(0, 1, 0);
     }
 }

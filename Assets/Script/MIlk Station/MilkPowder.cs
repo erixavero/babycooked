@@ -1,23 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MilkPowder : MonoBehaviour
 {
+    [SerializeField] private GameObject powderSpoonPrefab;
+    [SerializeField] private GameObject parentForSpoon;
     [SerializeField] private float powderAmount;
-    public 
-
-    void AddPowder(GameObject targetObject)
+    [SerializeField] private float targetPowderAmount;
+    void OnMouseDown()
     {
-        MilkBottle targetbottle = targetObject.GetComponent<MilkBottle>();
-    }
-
-    void OnMouseUp()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        if (hit.collider.gameObject.name == "Milk Bottle")
-        {
-            AddPowder(hit.collider.gameObject);
-        }
+        if (Kettle.instance.isPouring) return;
+        if (MilkBottle.instance.milkPowderAmount >= targetPowderAmount) return;
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0f;
+        GameObject spoon = Instantiate(powderSpoonPrefab, mouseWorldPos, powderSpoonPrefab.transform.rotation, parentForSpoon.transform);
+        spoon.GetComponent<PowderSpoon>().powderAmount = powderAmount;
+        spoon.GetComponent<PowderSpoon>().targetPowderAmount = targetPowderAmount;
     }
 }
