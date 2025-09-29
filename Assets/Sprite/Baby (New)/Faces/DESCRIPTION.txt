@@ -1,0 +1,7 @@
+1 -> Boy 1 & 3
+2 -> Boy 2
+3 -> Boy 4
+G1 -> Girl 1
+G2 -> Girl 2
+G3 -> Girl 3
+G4 -> Girl 4
