@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Station : MonoBehaviour
 {
+    private Baby babyData;
     protected virtual void OnEnable()
     {
-        Debug.Log("on enable");
-        Camera.main.transparencySortAxis = new Vector3(0, 0, 1); // Example: Y axis
+        
     }
 
     public void CloseStation()
@@ -20,10 +20,13 @@ public class Station : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    void OnDisable()
+    protected virtual void OnDisable()
     {
-        Debug.Log("on disable");
-        Camera.main.transparencySortAxis = new Vector3(0, 1, 0); // Reset to default
         PlayerInteraction.instance.StopInteraction();
+    }
+
+    public void GetBabyData()
+    {
+        babyData = PlayerInteraction.instance.babyBeingHeld;
     }
 }

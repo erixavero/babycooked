@@ -11,6 +11,10 @@ public class PlayerInteraction : MonoBehaviour
     public GameObject[] stationsObject;
     public bool isInteracting;
 
+    // Baby being Held
+
+    public Baby babyBeingHeld;
+
     void Awake()
     {
         instance = this;
@@ -32,7 +36,7 @@ public class PlayerInteraction : MonoBehaviour
             switch (hit.collider.gameObject.name)
             {
                 case "BabyCrib":
-                    // get baby data.
+                    babyBeingHeld = hit.collider.GetComponent<BabyCrib>().GiveBaby();
                     break;
                 case "Milk Station":
                     stationsObject[0].SetActive(true);

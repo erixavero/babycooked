@@ -18,6 +18,7 @@ public class PowderSpoon : Consumable
             yield return null;
         }
         RaycastHit2D hit = Physics2D.Raycast(powderPosition.position, Vector2.zero);
+        Debug.Log(hit.collider.gameObject.name);
         if (hit.collider.gameObject.name == "Milk Bottle")
         {
             Debug.Log("Hit Milk Bottle");

@@ -53,13 +53,25 @@ public class MilkBottle : DraggableItem
         }
     }
 
+    public override void OnMouseUp()
+    {
+        base.OnMouseUp();
+        if(mixCounter >= minimumMixCount) 
+        {
+            Debug.Log("Milk is ready!");
+            StartCoroutine(CoolDown(1f));
+            MilkStation.instance.CloseStation();
+        }
+
+    }
+
     private void Shake(float input)
     {
-        if (input == 0) 
+        if (input == 0)
         {
             return;
         }
-        if (input > 0.5f) 
+        if (input > 0.5f)
         {
             aboveZero = true;
         }
@@ -67,13 +79,13 @@ public class MilkBottle : DraggableItem
         {
             belowZero = true;
         }
-        if (aboveZero && belowZero) 
+        if (aboveZero && belowZero)
         {
             mixCounter++;
             aboveZero = false;
             belowZero = false;
             TransitionMilkColor();
-            StartCoroutine(CoolDown());
+            StartCoroutine(CoolDown(0.05f));
         }
     }
 
@@ -86,10 +98,10 @@ public class MilkBottle : DraggableItem
         return false;
     }
 
-    IEnumerator CoolDown() 
+    IEnumerator CoolDown(float time) 
     {
         isCoolDown = true;
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(time);
         isCoolDown = false;
     }
 

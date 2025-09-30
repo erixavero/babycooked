@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e526fbb6ec5b10c429387537879e4958, type: 3}
   m_Name: Baby1
   m_EditorClassIdentifier: 
-  babyName: 
+  babyName: Thomas
   milkNeeded: 0
   babySprites:
-  - name: 
-    sprite: []
+  - name: Naked
+    sprite: {fileID: 902948980, guid: 14fab12c1ae7449468ea63de7abedac6, type: 3}
+  - name: WearingCleanDIaper
+    sprite: {fileID: -1417202983, guid: b42379a572b506a42b164ce177e16649, type: 3}
+  - name: WearingDirtyDiaper
+    sprite: {fileID: -799380650, guid: 6f588c4c17e4201418f3938e9f24c3d1, type: 3}
+  - name: NakedWithDiaper
+    sprite: {fileID: 362576457, guid: c193dd58c759bd8408c5b17ded4175b7, type: 3}
+  - name: DiaperSwipeUp
+    sprite: {fileID: 1341244113, guid: 3444a451b0fb1d445886bcaa4ba07ea8, type: 3}
+  - name: DiaperSwipeLeft
+    sprite: {fileID: -253379203, guid: 918a1ec65c4b1084b8370c22a58f72e7, type: 3}
