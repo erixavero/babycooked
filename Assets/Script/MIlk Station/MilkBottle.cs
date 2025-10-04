@@ -32,6 +32,7 @@ public class MilkBottle : DraggableItem
     void OnEnable()
     {
         mixCounter = 0;
+        minimumMixCount = PlayerInteraction.instance.babyBeingHeld.shakeNeeded;
         aboveZero = false;
         belowZero = false;
         isCoolDown = false;
@@ -56,10 +57,11 @@ public class MilkBottle : DraggableItem
     public override void OnMouseUp()
     {
         base.OnMouseUp();
-        if(mixCounter >= minimumMixCount) 
+        if (mixCounter >= minimumMixCount)
         {
             Debug.Log("Milk is ready!");
             StartCoroutine(CoolDown(1f));
+            PlayerInteraction.instance.babyBeingHeld.currentNeed = Baby.BabyNeeds.None;
             MilkStation.instance.CloseStation();
         }
 

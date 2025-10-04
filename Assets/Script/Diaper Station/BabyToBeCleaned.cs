@@ -5,12 +5,9 @@ using UnityEngine;
 public class BabyToBeCleaned : MonoBehaviour
 {
     public static BabyToBeCleaned instance;
-    [Header("Baby UI")]
-    public Sprite cleanBabySprite;
-    public Sprite dirtyBabySprite;
-    public Sprite nakedBabySprite;
     [SerializeField] private SpriteRenderer babySpriteRenderer;
     [Header("Utilities")]
+    public GameObject dirtyDiaperInstance;
     public bool dirtyDiaperDiscarded;
     public bool cleanDiaperApplied;
     public bool babyPowderApplied;
@@ -37,41 +34,37 @@ public class BabyToBeCleaned : MonoBehaviour
         babySpriteRenderer.sprite = PlayerInteraction.instance.babyBeingHeld.babyData.GetBabySpriteByName("WearingDirtyDiaper").sprite;
     }
 
-    void Update()
-    {
-        if (dirtyDiaperDiscarded)
-        {
-            babySpriteRenderer.sprite = nakedBabySprite;
-            if (babyPowderApplied)
-            {
-                babySpriteRenderer.sprite = cleanBabySprite;
-            }
-        }
-    }
-
     void OnMouseDrag()
     {
-        Debug.Log(Input.GetAxisRaw("Mouse X") + "," + Input.GetAxisRaw("Mouse Y"));
+        // Debug.Log(Input.GetAxisRaw("Mouse X") + "," + Input.GetAxisRaw("Mouse Y"));
         if (dirtyDiaperDiscarded && cleanDiaperApplied && babyPowderApplied && isBabyWiped)
         {
             if (swipeUp)
             {
-                switch (Input.GetAxisRaw("Mouse X"))
+                if (swipeLeft)
                 {
-                    case > 0.5f:
+                    if(Input.GetAxisRaw("Mouse X") < -0.5f)
+                    {
                         swipeRight = true;
-                        break;
-                    case < -0.5f:
+                        SetBabySprite("WearingCleanDiaper");
+                    }
+                }
+                else
+                {
+                    if(Input.GetAxisRaw("Mouse X") > 0.5f)
+                    {
                         swipeLeft = true;
-                        break;
+                        SetBabySprite("DiaperSwipeLeft");
+                    }
                 }
             }
-
-            switch (Input.GetAxisRaw("Mouse Y"))
+            else
             {
-                case > 0.5f:
+                if (Input.GetAxisRaw("Mouse Y") > 0.5f)
+                {
                     swipeUp = true;
-                    break;
+                    SetBabySprite("DiaperSwipeUp");
+                }
             }
         }
     }
@@ -94,19 +87,26 @@ public class BabyToBeCleaned : MonoBehaviour
         if (dirtyDiaperDiscarded) return;
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
-        GameObject dirtyDiaperInstance = Instantiate(dirtyDiaper, mouseWorldPos, dirtyDiaper.transform.rotation, transform);
+        dirtyDiaperInstance = Instantiate(dirtyDiaper, mouseWorldPos, dirtyDiaper.transform.rotation, transform);
+        SetBabySprite("Naked");
     }
 
     public void CheckFinish()
     {
         if (dirtyDiaperDiscarded && cleanDiaperApplied && babyPowderApplied && isBabyWiped)
         {
-            DataManager.instance.AddSuccess();
+            DataManager.instance.AddSuccess("Diaper");
         }
         else
         {
             DataManager.instance.AddFail();
         }
+        PlayerInteraction.instance.babyBeingHeld.currentNeed = Baby.BabyNeeds.None;
         DiaperStation.instance.CloseStation();
+    }
+
+    public void SetBabySprite(string spriteName)
+    {
+        babySpriteRenderer.sprite = PlayerInteraction.instance.babyBeingHeld.babyData.GetBabySpriteByName(spriteName).sprite;
     }
 }

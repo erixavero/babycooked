@@ -5,9 +5,15 @@ using UnityEngine;
 public class Station : MonoBehaviour
 {
     private Baby babyData;
+    [SerializeField] private GameObject interactUI;
+
+    void Start()
+    {
+        interactUI.SetActive(false);
+    }
     protected virtual void OnEnable()
     {
-        
+
     }
 
     public void CloseStation()
@@ -28,5 +34,15 @@ public class Station : MonoBehaviour
     public void GetBabyData()
     {
         babyData = PlayerInteraction.instance.babyBeingHeld;
+    }
+
+    public void ShowUI()
+    {
+        interactUI.SetActive(true);
+    }
+    
+    public void HideUI()
+    {
+        interactUI.SetActive(false);
     }
 }

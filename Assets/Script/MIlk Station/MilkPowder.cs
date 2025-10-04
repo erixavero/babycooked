@@ -8,6 +8,7 @@ public class MilkPowder : MonoBehaviour
     [SerializeField] private float targetPowderAmount;
     void OnMouseDown()
     {
+        targetPowderAmount = PlayerInteraction.instance.babyBeingHeld.powderNeeded;
         if (Kettle.instance.isPouring) return;
         if (MilkBottle.instance.milkPowderAmount >= targetPowderAmount) return;
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

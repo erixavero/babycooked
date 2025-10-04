@@ -45,7 +45,7 @@ public class ScrubMinigame : MonoBehaviour
     {
         if (hygieneMeter.value >= hygieneMeter.maxValue)
         {
-            DataManager.instance.AddSuccess();
+            DataManager.instance.AddSuccess("Bath");
         }
         else
         {

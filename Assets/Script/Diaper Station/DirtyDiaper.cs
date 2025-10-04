@@ -18,6 +18,10 @@ public class DirtyDiaper : Consumable
         {
             BabyToBeCleaned.instance.dirtyDiaperDiscarded = true;
         }
+        else
+        {
+            BabyToBeCleaned.instance.SetBabySprite("WearingDirtyDiaper");
+        }
         Destroy(gameObject);
     }
 }

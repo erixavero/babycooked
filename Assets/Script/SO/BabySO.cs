@@ -10,9 +10,8 @@ public class BabySprite
 public class BabySO : ScriptableObject
 {
     public string babyName;
-    public float milkNeeded;
+    [Header("Baby Sprites")]
     public BabySprite[] babySprites;
-
     public BabySprite GetBabySpriteByName(string searchName)
     {
         foreach (var babySprite in babySprites)

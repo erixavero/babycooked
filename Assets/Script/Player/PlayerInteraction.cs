@@ -11,6 +11,8 @@ public class PlayerInteraction : MonoBehaviour
     public GameObject[] stationsObject;
     public bool isInteracting;
 
+    private StationUIHandler lastStation;
+
     // Baby being Held
 
     public Baby babyBeingHeld;
@@ -20,6 +22,11 @@ public class PlayerInteraction : MonoBehaviour
         instance = this;
         isInteracting = false;
     }
+
+    void Start()
+    {
+        babyBeingHeld = null;
+    }
     void Update()
     {
         if (isInteracting) return;
@@ -27,31 +34,88 @@ public class PlayerInteraction : MonoBehaviour
         {
             lastpos = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
         }
-
         RaycastHit2D hit = Physics2D.Raycast(transform.position, lastpos, rayDistance, interactableLayer);
-        Debug.DrawRay(transform.position, lastpos * rayDistance, Color.red);
-        if (hit.collider != null && Input.GetKeyDown(KeyCode.E))
+        // Debug.DrawRay(transform.position, lastpos * rayDistance, Color.red);
+        if (hit.collider != null)
         {
-            Debug.Log("hit " + hit.collider.gameObject.name);
-            switch (hit.collider.gameObject.name)
+            StationUIHandler station = hit.collider.GetComponent<StationUIHandler>();
+            if (station != null)
             {
-                case "BabyCrib":
-                    babyBeingHeld = hit.collider.GetComponent<BabyCrib>().GiveBaby();
-                    break;
-                case "Milk Station":
-                    stationsObject[0].SetActive(true);
-                    startInteraction();
-                    break;
-                case "Diaper Station":
-                    stationsObject[1].SetActive(true);
-                    startInteraction();
-                    break;
-                case "Bathing Station":
-                    stationsObject[2].SetActive(true);
-                    startInteraction();
-                    break;
+                station.ShowUI();
+                lastStation = station;
             }
         }
+        else
+        {
+            if (lastStation != null)
+            {
+                lastStation.HideUI();
+                lastStation = null;
+            }
+        }
+        if (hit.collider != null && Input.GetKeyDown(KeyCode.E))
+            {
+                // Debug.Log("hit " + hit.collider.gameObject.name);
+                switch (hit.collider.gameObject.name)
+                {
+                    case "BabyCrib":
+                        // Debug.Log("current baby being held : " + babyBeingHeld);
+                        if (babyBeingHeld == null)
+                        {
+                            if (hit.collider.GetComponent<BabyCrib>().currentBaby.currentNeed != Baby.BabyNeeds.None)
+                            {
+                                babyBeingHeld = hit.collider.GetComponent<BabyCrib>().GiveBaby();
+                            }
+                            else
+                            {
+                                // Debug.Log("Baby has no needs");
+                            }
+                        }
+                        else
+                        {
+                            hit.collider.GetComponent<BabyCrib>().AcceptBaby(babyBeingHeld);
+                            // Debug.Log("Baby returned to crib");
+                            babyBeingHeld = null;
+                        }
+                        break;
+                    case "Milk Station":
+                        if(babyBeingHeld != null && babyBeingHeld.currentNeed == Baby.BabyNeeds.Milk)
+                        {
+                            stationsObject[0].SetActive(true);
+                            startInteraction();
+                        }
+                        else
+                        {
+                            // Debug.Log("No baby being held or baby does not need milk");
+                            return;
+                        }
+                        break;
+                    case "Diaper Station":
+                        if (babyBeingHeld != null && babyBeingHeld.currentNeed == Baby.BabyNeeds.Diaper)
+                        {
+                            stationsObject[1].SetActive(true);
+                            startInteraction();
+                        }
+                        else
+                        {
+                            // Debug.Log("No baby being held or baby does not need diaper change");
+                            return;
+                        }
+                        break;
+                    case "Bathing Station":
+                        if (babyBeingHeld != null && babyBeingHeld.currentNeed == Baby.BabyNeeds.Bath)
+                        {
+                            stationsObject[2].SetActive(true);
+                            startInteraction();
+                        }
+                        else
+                        {
+                            // Debug.Log("No baby being held or baby does not need bath");
+                            return;
+                        }
+                        break;
+                }
+            }
     }
 
     public void startInteraction()

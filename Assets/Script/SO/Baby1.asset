@@ -17,7 +17,7 @@ MonoBehaviour:
   babySprites:
   - name: Naked
     sprite: {fileID: 902948980, guid: 14fab12c1ae7449468ea63de7abedac6, type: 3}
-  - name: WearingCleanDIaper
+  - name: WearingCleanDiaper
     sprite: {fileID: -1417202983, guid: b42379a572b506a42b164ce177e16649, type: 3}
   - name: WearingDirtyDiaper
     sprite: {fileID: -799380650, guid: 6f588c4c17e4201418f3938e9f24c3d1, type: 3}

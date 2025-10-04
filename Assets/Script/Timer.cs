@@ -10,6 +10,10 @@ public class Timer : MonoBehaviour
     public float totalTime;
     public UnityEvent onTimesUp;
 
+    void OnEnable()
+    {
+        totalTime = PlayerInteraction.instance.babyBeingHeld.fulfillTime;
+    }
 
     void Start()
     {
