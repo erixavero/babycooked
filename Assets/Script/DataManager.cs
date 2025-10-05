@@ -7,9 +7,14 @@ public class DataManager : MonoBehaviour
     public static DataManager instance;
     [SerializeField] private List<DifficultySO> allDifficulties;
     private DifficultySO currentDifficulty;
-    private int successCount;
-    private int failCount;
     public Dictionary<string, int> taskSuccessCount = new Dictionary<string, int>
+    {
+        {"Milk", 0},
+        {"Diaper", 0},
+        {"Bath", 0}
+    };
+
+    public Dictionary<string, int> taskFailCount = new Dictionary<string, int>
     {
         {"Milk", 0},
         {"Diaper", 0},
@@ -18,12 +23,15 @@ public class DataManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
-    }
-
-    void Start()
-    {
-        SetDifficulty(1);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void AddSuccess(string task)
@@ -32,10 +40,10 @@ public class DataManager : MonoBehaviour
         Debug.Log($"Success Count for {task}: {taskSuccessCount[task]}");
     }
 
-    public void AddFail()
+    public void AddFail(string task)
     {
-        failCount++;
-        Debug.Log("Fail Count: " + failCount);
+        taskFailCount[task]++;
+        Debug.Log($"Fail Count for {task}: {taskFailCount[task]}");
     }
 
     public void SetDifficulty(int level)

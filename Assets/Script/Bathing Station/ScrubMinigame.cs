@@ -49,7 +49,7 @@ public class ScrubMinigame : MonoBehaviour
         }
         else
         {
-            DataManager.instance.AddFail();
+            DataManager.instance.AddFail("Bath");
         }
         BathingStation.instance.CloseStation();
     }

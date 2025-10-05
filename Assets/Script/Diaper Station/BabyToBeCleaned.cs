@@ -99,7 +99,7 @@ public class BabyToBeCleaned : MonoBehaviour
         }
         else
         {
-            DataManager.instance.AddFail();
+            DataManager.instance.AddFail("Diaper");
         }
         PlayerInteraction.instance.babyBeingHeld.currentNeed = Baby.BabyNeeds.None;
         DiaperStation.instance.CloseStation();

@@ -5,14 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using UnityEditor.SearchService;
+using Unity.VisualScripting;
 
 public class MenuHandler : MonoBehaviour
 {
     [SerializeField] private Image blackScreen;
-    [SerializeField] private GameObject settings;
+    private GameObject levelSelectMenu;
 
     void Start()
     {
+        if (GameObject.FindGameObjectWithTag("Level Selection") != null) levelSelectMenu = GameObject.FindGameObjectWithTag("Level Selection");
+        levelSelectMenu?.SetActive(false);
         StartCoroutine(FadeIn(1f));
     }
     public void LoadScene(string sceneName)
@@ -25,33 +28,44 @@ public class MenuHandler : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    public void ToggleSettings()
+    public void ToggleLevelSelectMenu()
     {
-        settings.SetActive(!settings.activeSelf);
+        levelSelectMenu?.SetActive(!levelSelectMenu.activeSelf);
     }
 
     #region BlackScreen Fade Transition
 
     IEnumerator FadeIn(float duration)
     {
-        while (duration > 0)
+        float timer = 0f;
+        while (timer < duration)
         {
-            blackScreen.color = new Color(0, 0, 0, duration);
-            duration -= Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, timer / duration);
+            blackScreen.color = new Color(0, 0, 0, alpha);
+            timer += Time.deltaTime;
             yield return null;
         }
+        blackScreen.color = new Color(0, 0, 0, 0f);
     }
 
     IEnumerator FadeOut(float duration)
     {
-        while (duration > 0)
+        float timer = 0f;
+        while (timer < duration)
         {
-            blackScreen.color = new Color(0, 0, 0, 1f-duration);
-            duration -= Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, timer / duration);
+            blackScreen.color = new Color(0, 0, 0, alpha);
+            timer += Time.deltaTime;
             yield return null;
         }
+        blackScreen.color = new Color(0, 0, 0, 1f);
     }
     #endregion
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
 
 }
