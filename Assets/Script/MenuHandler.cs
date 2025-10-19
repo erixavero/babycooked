@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Threading.Tasks;
-using UnityEditor.SearchService;
-using Unity.VisualScripting;
 
 public class MenuHandler : MonoBehaviour
 {
@@ -13,19 +10,26 @@ public class MenuHandler : MonoBehaviour
     private GameObject levelSelectMenu;
 
     void Start()
-    {
-        if (GameObject.FindGameObjectWithTag("Level Selection") != null) levelSelectMenu = GameObject.FindGameObjectWithTag("Level Selection");
+    {   
+        levelSelectMenu = GameObject.FindGameObjectWithTag("Level Selection");
         levelSelectMenu?.SetActive(false);
         StartCoroutine(FadeIn(1f));
     }
     public void LoadScene(string sceneName)
     {
         StartCoroutine(FadeOutAndLoad(sceneName));
+        AudioManager.instance.PlayMusic(sceneName);
+    }
+
+    public void RestartLevel()
+    {
+        StartCoroutine(FadeOutAndLoad(SceneManager.GetActiveScene().name));
     }
     IEnumerator FadeOutAndLoad(string sceneName)
     {
         yield return StartCoroutine(FadeOut(1f));
-        SceneManager.LoadScene(sceneName);
+        // yield return null;
+        SceneManager.LoadSceneAsync(sceneName);
     }
 
     public void ToggleLevelSelectMenu()

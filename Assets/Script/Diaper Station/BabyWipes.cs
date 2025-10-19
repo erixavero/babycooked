@@ -14,9 +14,13 @@ public class BabyWipes : Consumable
             yield return null;
         }
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-        if (hit.collider.gameObject.name == "Baby To Be Cleaned")
+        if(hit.collider != null)
         {
-            BabyToBeCleaned.instance.isBabyWiped = true;
+            if (hit.collider.gameObject.name == "Baby To Be Cleaned")
+            {
+                if (!BabyToBeCleaned.instance.dirtyDiaperDiscarded) yield return null;
+                BabyToBeCleaned.instance.isBabyWiped = true;
+            }
         }
         Destroy(gameObject);
     }

@@ -14,13 +14,17 @@ public class DirtyDiaper : Consumable
             yield return null;
         }
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-        if (hit.collider.gameObject.name == "Trash Bin")
+        if (hit.collider != null)
         {
-            BabyToBeCleaned.instance.dirtyDiaperDiscarded = true;
-        }
-        else
-        {
-            BabyToBeCleaned.instance.SetBabySprite("WearingDirtyDiaper");
+            if (hit.collider.gameObject.name == "Trash Bin")
+            {
+                AudioManager.instance.PlaySFX("Clothe Discard");
+                BabyToBeCleaned.instance.dirtyDiaperDiscarded = true;
+            }
+            else
+            {
+                BabyToBeCleaned.instance.SetBabySprite("WearingDirtyDiaper");
+            }
         }
         Destroy(gameObject);
     }

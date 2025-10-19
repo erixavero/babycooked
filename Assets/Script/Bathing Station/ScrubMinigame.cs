@@ -17,6 +17,11 @@ public class ScrubMinigame : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
+
+    void OnEnable()
+    {
+        hygieneMeter.value = 0f;
         shampooGiven = false;
         soapGiven = false;
         scrubber.GetComponent<Collider2D>().enabled = false;
@@ -51,6 +56,9 @@ public class ScrubMinigame : MonoBehaviour
         {
             DataManager.instance.AddFail("Bath");
         }
+        if (PlayerInteraction.instance.isCarryingBaby && PlayerInteraction.instance.babyBeingHeld != null)
+            PlayerInteraction.instance.babyBeingHeld.currentNeed = Baby.BabyNeeds.None;
         BathingStation.instance.CloseStation();
+        AudioManager.instance.StopSFX("Shower");
     }
 }

@@ -7,7 +7,7 @@ public abstract class DraggableItem : MonoBehaviour
 
     public virtual void OnMouseDown()
     {
-        Debug.Log("Dragging " + gameObject.name);
+        // Debug.Log("Dragging " + gameObject.name);
         originalPosition = transform.position;
         mouseOffset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(transform.position.x, transform.position.y, -1f);

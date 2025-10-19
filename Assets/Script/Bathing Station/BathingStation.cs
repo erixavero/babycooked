@@ -17,6 +17,7 @@ public class BathingStation : Station
     {
         base.OnEnable();
         OpenTempGame();
+        AudioManager.instance.PlaySFX("Shower");
     }
 
     public void OpenScrubGame()

@@ -12,11 +12,14 @@ public class Timer : MonoBehaviour
 
     void OnEnable()
     {
-        totalTime = PlayerInteraction.instance.babyBeingHeld.fulfillTime;
-    }
-
-    void Start()
-    {
+        if (PlayerInteraction.instance.isCarryingBaby && PlayerInteraction.instance.babyBeingHeld != null)
+        {
+            totalTime = PlayerInteraction.instance.babyBeingHeld.fulfillTime;
+        }
+        else
+        {
+            totalTime = 1f; // fallback minimal time if no baby is assigned
+        }
         timerImage.fillAmount = 1f;
         StartCoroutine(StartTimer());
     }

@@ -18,17 +18,21 @@ public class PowderSpoon : Consumable
             yield return null;
         }
         RaycastHit2D hit = Physics2D.Raycast(powderPosition.position, Vector2.zero);
-        Debug.Log(hit.collider.gameObject.name);
-        if (hit.collider.gameObject.name == "Milk Bottle")
+        // Debug.Log(hit.collider.gameObject.name);
+        if (hit.collider != null)
         {
-            Debug.Log("Hit Milk Bottle");
-            hit.collider.gameObject.GetComponent<MilkBottle>().milkPowderAmount += powderAmount;
-            if (hit.collider.gameObject.GetComponent<MilkBottle>().milkPowderAmount >= targetPowderAmount)
+            if (hit.collider.gameObject.name == "Milk Bottle")
             {
-                hit.collider.gameObject.GetComponent<MilkBottle>().ingredients.Add("Milk Powder");
+                // Debug.Log("Hit Milk Bottle");
+                hit.collider.gameObject.GetComponent<MilkBottle>().milkPowderAmount += powderAmount;
+                hit.collider.gameObject.GetComponent<MilkBottle>().UpdateMilkPowderUI();
+                if (hit.collider.gameObject.GetComponent<MilkBottle>().milkPowderAmount >= targetPowderAmount)
+                {
+                    hit.collider.gameObject.GetComponent<MilkBottle>().ingredients.Add("Milk Powder");
+
+                }
             }
         }
-
         Destroy(gameObject);
     }
 }

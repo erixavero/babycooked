@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class MilkBottle : DraggableItem
     [SerializeField] private Color targetColor;
     [SerializeField] private Color currentColor;
     public Image waterIndicator;
+    public Image milkPowderIndicator;
+    public Sprite[] milkPowderSprites;
 
     [Header("Bottle Settings")]
     public float milkPowderAmount;
@@ -32,7 +35,16 @@ public class MilkBottle : DraggableItem
     void OnEnable()
     {
         mixCounter = 0;
-        minimumMixCount = PlayerInteraction.instance.babyBeingHeld.shakeNeeded;
+        milkPowderAmount = 0f;
+        UpdateMilkPowderUI();
+        if (PlayerInteraction.instance.isCarryingBaby && PlayerInteraction.instance.babyBeingHeld != null)
+        {
+            minimumMixCount = PlayerInteraction.instance.babyBeingHeld.shakeNeeded;
+        }
+        else
+        {
+            minimumMixCount = 1f;
+        }
         aboveZero = false;
         belowZero = false;
         isCoolDown = false;
@@ -59,9 +71,11 @@ public class MilkBottle : DraggableItem
         base.OnMouseUp();
         if (mixCounter >= minimumMixCount)
         {
-            Debug.Log("Milk is ready!");
+            // Debug.Log("Milk is ready!");
             StartCoroutine(CoolDown(1f));
-            PlayerInteraction.instance.babyBeingHeld.currentNeed = Baby.BabyNeeds.None;
+            if (PlayerInteraction.instance.isCarryingBaby && PlayerInteraction.instance.babyBeingHeld != null)
+                PlayerInteraction.instance.babyBeingHeld.currentNeed = Baby.BabyNeeds.None;
+            DataManager.instance.AddSuccess("Milk");
             MilkStation.instance.CloseStation();
         }
 
@@ -87,7 +101,21 @@ public class MilkBottle : DraggableItem
             aboveZero = false;
             belowZero = false;
             TransitionMilkColor();
+            AudioManager.instance.PlaySFX("Bottle Shake");
             StartCoroutine(CoolDown(0.05f));
+        }
+    }
+
+    public void UpdateMilkPowderUI()
+    {
+        if (milkPowderAmount <= 0)
+        {
+            milkPowderIndicator.gameObject.SetActive(false);
+        }
+        else
+        {
+            milkPowderIndicator.gameObject.SetActive(true);
+            milkPowderIndicator.sprite = milkPowderSprites[(int)milkPowderAmount / 50];
         }
     }
 

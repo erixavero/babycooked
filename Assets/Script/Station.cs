@@ -33,7 +33,14 @@ public class Station : MonoBehaviour
 
     public void GetBabyData()
     {
-        babyData = PlayerInteraction.instance.babyBeingHeld;
+        if (PlayerInteraction.instance.isCarryingBaby)
+        {
+            babyData = PlayerInteraction.instance.babyBeingHeld;
+        }
+        else
+        {
+            babyData = null;
+        }
     }
 
     public void ShowUI()

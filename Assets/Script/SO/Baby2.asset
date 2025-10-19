@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e526fbb6ec5b10c429387537879e4958, type: 3}
+  m_Name: Baby2
+  m_EditorClassIdentifier: 
+  babyName: Thomas
+  babySprites:
+  - name: Naked
+    sprite: {fileID: -1316689445, guid: ec7e4e6bd3a49344fb55ecd9162f33e9, type: 3}
+  - name: WearingCleanDiaper
+    sprite: {fileID: 215832826, guid: 582ae4f8860016147bafd01037818460, type: 3}
+  - name: WearingDirtyDiaper
+    sprite: {fileID: 799749325, guid: d4c6976ed54ecc246b6fbbca6effbd9b, type: 3}
+  - name: NakedWithDiaper
+    sprite: {fileID: -1776184027, guid: 7fbf41a0edf6d6d41acbfac6b65ea619, type: 3}
+  - name: DiaperSwipeUp
+    sprite: {fileID: -92533722, guid: 2c2ac9ad01f85154782c741c4b3955ca, type: 3}
+  - name: DiaperSwipeLeft
+    sprite: {fileID: -1736538861, guid: 6569dceebfc6ef248bcf83a3e395e82d, type: 3}

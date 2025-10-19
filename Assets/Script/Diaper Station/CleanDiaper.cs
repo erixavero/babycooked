@@ -14,11 +14,16 @@ public class CleanDiaper : Consumable
             yield return null;
         }
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-        if (hit.collider.gameObject.name == "Baby To Be Cleaned")
+        if(hit.collider != null)
         {
-            if (!BabyToBeCleaned.instance.dirtyDiaperDiscarded || !BabyToBeCleaned.instance.isBabyWiped || !BabyToBeCleaned.instance.babyPowderApplied) yield return null;
-            BabyToBeCleaned.instance.cleanDiaperApplied = true;
-            BabyToBeCleaned.instance.SetBabySprite("NakedWithDiaper");
+            if (hit.collider.gameObject.name == "Baby To Be Cleaned")
+            {
+                if (!BabyToBeCleaned.instance.dirtyDiaperDiscarded || !BabyToBeCleaned.instance.isBabyWiped || !BabyToBeCleaned.instance.babyPowderApplied) yield return null;
+                BabyToBeCleaned.instance.cleanDiaperApplied = true;
+                BabyToBeCleaned.instance.SetBabySprite("NakedWithDiaper");
+                BabyToBeCleaned.instance.swipeIndicator.SetActive(true);
+                BabyToBeCleaned.instance.swipeIndicator.GetComponent<Animator>().Play("SwipeUpAnim");
+            }
         }
         Destroy(gameObject);
     }

@@ -38,6 +38,7 @@ public class Baby
         powderNeeded = difficulty.milkPowderNeeded;
         patience = difficulty.babyPatience;
         totalNeedCount = difficulty.babyNeedCount;
+        currentNeedCount = 0;
     }
 }
 public class BabyCrib : MonoBehaviour
@@ -57,18 +58,6 @@ public class BabyCrib : MonoBehaviour
         babyNeedsUI.SetActive(false);
         patienceMeterUI.SetActive(false);
         currentBaby = null;
-        GenerateBaby();
-    }
-
-    void GenerateBaby()
-    {
-        if (allBabyDatas.Count == 0) return;
-        if (currentBaby != null) return;
-        BabySO selectedBaby = allBabyDatas[Random.Range(0, allBabyDatas.Count)];
-        DifficultySO difficultySelected = DataManager.instance.GetCurrentDifficulty();
-        currentBaby = new Baby(selectedBaby, difficultySelected);
-        babyInCrib.SetActive(true);
-        StartCoroutine(GenerateBabyNeeds());
     }
 
     public Baby GiveBaby()
@@ -85,9 +74,15 @@ public class BabyCrib : MonoBehaviour
     public void AcceptBaby(Baby baby)
     {
         // Debug.Log("current baby in crib" + currentBaby.babyData.babyName);
-        if (currentBaby != null || baby.currentNeed != Baby.BabyNeeds.None) return;
+        if (currentBaby != null || baby.currentNeed != Baby.BabyNeeds.None)
+        {
+            Debug.Log("Crib is occupied or baby has needs");
+            return;
+        }
         currentBaby = null;
         currentBaby = baby;
+        PlayerInteraction.instance.babyBeingHeld = null;
+        PlayerInteraction.instance.isCarryingBaby = false;
         Debug.Log("Baby accepted: " + currentBaby.babyData.babyName);
         babyInCrib.SetActive(true);
         StartCoroutine(GenerateBabyNeeds());
@@ -97,13 +92,15 @@ public class BabyCrib : MonoBehaviour
     {
         if (currentBaby == null) yield return null;
         if (currentBaby.currentNeed != Baby.BabyNeeds.None) yield return null;
-        if (currentBaby.currentNeedCount > 0)
+        if (currentBaby.currentNeedCount > 0 && currentBaby.currentNeedCount < currentBaby.totalNeedCount)
         {
+            Debug.Log("current baby need : " + currentBaby.currentNeedCount);
             yield return new WaitForSeconds(currentBaby.intervalBetweenNeeds);
         }
-        else if (currentBaby.currentNeedCount > currentBaby.totalNeedCount)
+        else if (currentBaby.currentNeedCount >= currentBaby.totalNeedCount)
         {
             Debug.Log("Baby is going home");
+            yield return new WaitForSeconds(currentBaby.intervalBetweenNeeds);
             currentBaby.currentNeed = Baby.BabyNeeds.GoHome;
             babyNeedsUI.SetActive(true);
             babyNeedsUI.GetComponent<SpriteRenderer>().sprite = babyNeedsSprites[4];
@@ -136,9 +133,11 @@ public class BabyCrib : MonoBehaviour
 
             if (currentPatience <= 0)
             {
+                DataManager.instance.AddFail(currentBaby.currentNeed.ToString());
                 Debug.Log("Baby is upset");
-                currentBaby.currentNeed = Baby.BabyNeeds.None;
-                babyNeedsUI.SetActive(false);
+                currentBaby.currentNeed = Baby.BabyNeeds.GoHome;
+                babyNeedsUI.GetComponent<SpriteRenderer>().sprite = babyNeedsSprites[4];
+                // babyNeedsUI.SetActive(false);
                 patienceMeterUI.SetActive(false);
                 yield break;
             }

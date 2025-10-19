@@ -57,15 +57,56 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-    public void PlaySFX(string name)
+    public void PlaySFX(string clipName)
     {
-        Sound s = Array.Find(sfxs, sound => sound.audioName == name);
-        if (s == null)
+        if (CheckSFXPlaying(clipName))
         {
-            Debug.LogWarning("Sound: " + name + " not found!");
+            Debug.Log("Audio " + clipName + " already playing");
             return;
         }
-        AudioSource.PlayClipAtPoint(s.clip, Camera.main.transform.position, s.volume);
+        Sound sfx = Array.Find(sfxs, sound => sound.audioName == clipName);
+        if (sfx != null)
+        {
+            AudioSource tempSource = gameObject.AddComponent<AudioSource>();
+            tempSource.name = sfx.audioName;
+            tempSource.clip = sfx.clip;
+            tempSource.volume = sfx.volume;
+            tempSource.Play();
+            if(!sfx.loop)
+            {
+                Destroy(tempSource, sfx.clip.length);
+            }
+        }
+        else
+        {
+            Debug.Log("Could not find SFX clip: " + clipName);
+        }
+    }
+
+    public bool CheckSFXPlaying(string clipName)
+    {
+        AudioSource[] sfx = GetComponents<AudioSource>();
+        foreach (var source in sfx)
+        {
+            if (source.name == clipName && source.isPlaying)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void StopSFX(string name)
+    {
+        AudioSource[] sfx = GetComponents<AudioSource>();
+        foreach (var source in sfx)
+        {
+            if (source.name == name && source.isPlaying)
+            {
+                source.Stop();
+                Destroy(source);
+            }
+        }
     }
 
     public void SetMusicVolume(float volume)

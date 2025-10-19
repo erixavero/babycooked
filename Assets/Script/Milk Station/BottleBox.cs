@@ -11,6 +11,11 @@ public class BottleBox : MonoBehaviour
         milkBottle.SetActive(false);
     }
 
+    void OnEnable()
+    {
+        milkBottle.SetActive(false);
+    }
+
     void OnMouseDown()
     {
         if(milkBottle.activeSelf) return;

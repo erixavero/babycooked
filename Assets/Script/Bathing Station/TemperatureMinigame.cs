@@ -29,11 +29,11 @@ public class TemperatureMinigame : MonoBehaviour
             float scaledPlayerSpeed = edgeDistance > 0.4f ? playerSpeed * edgeDistance : playerSpeed * 0.4f;
             if (Input.GetKeyDown(KeyCode.W))
             {
-                temperatureSlider.value += scaledPlayerSpeed;
+                temperatureSlider.value -= scaledPlayerSpeed;
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
-                temperatureSlider.value -= scaledPlayerSpeed;
+                temperatureSlider.value += scaledPlayerSpeed;
             }
             temperatureSlider.value = Mathf.Clamp(temperatureSlider.value, temperatureSlider.minValue, temperatureSlider.maxValue);
         }
@@ -48,7 +48,10 @@ public class TemperatureMinigame : MonoBehaviour
         }
         else
         {
-            Debug.Log("Fail");
+            DataManager.instance.AddFail("Bath");
+            if (PlayerInteraction.instance.isCarryingBaby && PlayerInteraction.instance.babyBeingHeld != null)
+                PlayerInteraction.instance.babyBeingHeld.currentNeed = Baby.BabyNeeds.None;
+            BathingStation.instance.CloseStation();
         }
     }
 }

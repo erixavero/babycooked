@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   level: 1
+  score: 0
   babyPatience: 50
   babyFulfillTime: 20
   babyIntervalBetweenNeeds: 30
   milkShakeNeeded: 10
   milkPowderNeeded: 200
   babyNeedCount: 1
+  totalGeneratedBaby: 3

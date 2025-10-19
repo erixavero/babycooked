@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class Kettle : MonoBehaviour
 {
     public static Kettle instance;
+    private Collider2D kettleCollider;
     [SerializeField] private Animator kettleAnimator;
 
     [Header("Kettle UI")]
-    [SerializeField] private Button heatingButton;
+    // [SerializeField] private Button heatingButton;
     [SerializeField] private Image heatingIndicator;
     [SerializeField] private Color heatingColor;
     [SerializeField] private Color stopHeatingColor;
@@ -24,12 +25,14 @@ public class Kettle : MonoBehaviour
     {
         instance = this;
         kettleAnimator = GetComponent<Animator>();
+        kettleCollider = GetComponent<Collider2D>();
     }
     void OnEnable()
     {
         heatingLevel = 0;
         heatingDuration = heatingDuration > 0 ? heatingDuration : 5f;
         heatingIndicator.fillAmount = 0f;
+        kettleCollider.enabled = false;
     }
 
     void OnMouseDown()
@@ -38,6 +41,7 @@ public class Kettle : MonoBehaviour
         if (heatingLevel > 0f)
         {
             kettleAnimator.SetTrigger("Pouring");
+            AudioManager.instance.PlaySFX("Kettle Pour");
             isPouring = true;
         }
     }
@@ -78,13 +82,15 @@ public class Kettle : MonoBehaviour
             {
                 heatingIndicator.color = stopHeatingColor;
                 heatingLevel = 1;
+                kettleCollider.enabled = true;
             }
             else if (heatingIndicator.fillAmount >= 1f && elapsedTime > heatingDuration)
             {
                 heatingIndicator.color = overHeatColor;
                 heatingLevel = 2;
+                kettleCollider.enabled = true;
             }
-            Debug.Log(heatingLevel);
+            // Debug.Log(heatingLevel);  
             elapsedTime += 1f;
             yield return new WaitForSeconds(1f);
         }
