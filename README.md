@@ -15,7 +15,7 @@
 ---
 
 # 👶 About
-Nurture Spree is an 2D Top Down babysitting game where we play as a nurse taking care of multiple babies at the same time. Each baby has their own needs. Are you ready ?
+Nurture Spree is an 2D Top Down babysitting game. In Nurture Spree, players take the role of a daycare caregiver managing a constant flow of babies delivered by parents. Each baby arrives with specific needs — feeding, diaper changes, baths, or soothing — and it’s the player’s job to keep them healthy and happy before returning them. Using a baby monitor, players can anticipate needs and prepare in advance, but with multiple babies demanding attention at once, every second counts. By completing tasks, earning rewards, and upgrading their daycare with better tools, players must juggle chaos and strategy to run the ultimate nurturing spree.
 
 ---
 
