@@ -1,6 +1,16 @@
 # Gameplay Footage
-![NurtureSpreeGIF1](https://github.com/user-attachments/assets/ced06c06-715b-4e23-957c-5de2a5d55a38)
-![NurtureSpreeGIF2](https://github.com/user-attachments/assets/7b0e5226-f585-4565-8b85-ed9f000e60cc)  
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>
+        <img alt="NurtureSpreeGIF1" src="https://github.com/user-attachments/assets/ced06c06-715b-4e23-957c-5de2a5d55a38">
+      </td>
+      <td>
+        <img alt="NurtureSpreeGIF2" src="https://github.com/user-attachments/assets/7b0e5226-f585-4565-8b85-ed9f000e60cc">
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
