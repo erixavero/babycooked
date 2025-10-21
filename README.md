@@ -356,8 +356,57 @@ Nurture Spree is an 2D Top Down babysitting game. In Nurture Spree, players take
 ---
 
 # 👪 Contributors
-Eric - Game Programmer
-Angeline Maria Suryadi - Game Artist
-Angelina Jennifer Graciela - Game Designer
-Galih Dea Pratama - Game Designer
-Eric Xavero
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="50%">
+        <h3>Name</h3>
+      </th>
+      <th width="50%">
+        <h3>Role</h3>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a>Eric</a>
+      </td>
+      <td>
+        <a>Game Programmer</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a>Angeline Maria Suryadi</a>
+      </td>
+      <td>
+        <a>Game Artist</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a>Angelina Jennifer Graciela</a>
+      </td>
+      <td>
+        <a>Game Designer</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a>Galih Dea Pratama</a>
+      </td>
+      <td>
+        <a>Game Designer</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a>Eric Xavero</a>
+      </td>
+      <td>
+        <a>Game Designer</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
