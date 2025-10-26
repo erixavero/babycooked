@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     public GameObject tutorialPanel;
-    public Animator tutorialAnimator;
+    public Sprite[] allTutorialImages;
+    public Image tutorialImage;
     private int index;
 
     void Start()
     {
         index = 0;
+        tutorialImage.sprite = allTutorialImages[index];
         if (DataManager.instance.GetCurrentDifficulty().level == 1)
         {
             tutorialPanel.SetActive(true);
-            tutorialAnimator.Play("Tutor_" + index);
+            
         }
         else
         {
@@ -39,19 +42,15 @@ public class TutorialManager : MonoBehaviour
 
     public void NextTutorial()
     {
-        if (index < 17 && index >= 0)
-        {
-            index++;
-            tutorialAnimator.Play("Tutor_" + index);
-        }
+        index++;
+        if(index >= allTutorialImages.Length) index = 0;
+        tutorialImage.sprite = allTutorialImages[index];
     }
 
     public void PreviousTutorial()
     {
-        if (index < 17 && index >= 0)
-        {
-            index--;
-            tutorialAnimator.Play("Tutor_" + index);
-        }
+        index--;
+        if(index < 0) index = allTutorialImages.Length - 1;
+        tutorialImage.sprite = allTutorialImages[index];
     }
 }
