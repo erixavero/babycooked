@@ -49,6 +49,7 @@ public class MilkBottle : DraggableItem
         belowZero = false;
         isCoolDown = false;
         ingredients = new List<string>();
+        // waterIndicator.gameObject.SetActive(false);
         waterIndicator.color = startingColor;
         waterIndicator.fillAmount = 0f;
     }

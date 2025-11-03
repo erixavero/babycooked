@@ -19,6 +19,8 @@ public class Scrubber : DraggableItem
     void OnEnable()
     {
         transform.position = defaultPos;
+        scrubberCollider.enabled = true;
+        bubbleEffect.Stop();
     }
     
     public override void OnMouseDrag()
@@ -28,7 +30,6 @@ public class Scrubber : DraggableItem
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
         if (hit.collider != null)
         {
-            // Debug.Log(hit.collider.gameObject.name);
             if (hit.collider.gameObject.name == "BabyInBath")
             {
                 if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)

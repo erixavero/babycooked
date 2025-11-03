@@ -27,11 +27,11 @@ public class TemperatureMinigame : MonoBehaviour
             temperatureSlider.value = Mathf.MoveTowards(temperatureSlider.value, targetValue, forceSpeed * Time.deltaTime);
             float edgeDistance = Mathf.Abs((temperatureSlider.value - midpoint) / ((temperatureSlider.maxValue - temperatureSlider.minValue) / 2));
             float scaledPlayerSpeed = edgeDistance > 0.4f ? playerSpeed * edgeDistance : playerSpeed * 0.4f;
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 temperatureSlider.value -= scaledPlayerSpeed;
             }
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 temperatureSlider.value += scaledPlayerSpeed;
             }

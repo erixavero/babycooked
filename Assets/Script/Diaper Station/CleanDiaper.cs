@@ -18,11 +18,13 @@ public class CleanDiaper : Consumable
         {
             if (hit.collider.gameObject.name == "Baby To Be Cleaned")
             {
-                if (!BabyToBeCleaned.instance.dirtyDiaperDiscarded || !BabyToBeCleaned.instance.isBabyWiped || !BabyToBeCleaned.instance.babyPowderApplied) yield return null;
-                BabyToBeCleaned.instance.cleanDiaperApplied = true;
-                BabyToBeCleaned.instance.SetBabySprite("NakedWithDiaper");
-                BabyToBeCleaned.instance.swipeIndicator.SetActive(true);
-                BabyToBeCleaned.instance.swipeIndicator.GetComponent<Animator>().Play("SwipeUpAnim");
+                if (BabyToBeCleaned.instance.dirtyDiaperDiscarded && BabyToBeCleaned.instance.isBabyWiped && BabyToBeCleaned.instance.babyPowderApplied)
+                {
+                    BabyToBeCleaned.instance.cleanDiaperApplied = true;
+                    BabyToBeCleaned.instance.SetBabySprite("NakedWithDiaper");
+                    BabyToBeCleaned.instance.swipeIndicator.SetActive(true);
+                    BabyToBeCleaned.instance.swipeIndicator.GetComponent<Animator>().Play("SwipeUpAnim");
+                }
             }
         }
         Destroy(gameObject);

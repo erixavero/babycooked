@@ -23,6 +23,7 @@ public class MenuHandler : MonoBehaviour
 
     public void RestartLevel()
     {
+        DataManager.instance.initializeNewGame();
         StartCoroutine(FadeOutAndLoad(SceneManager.GetActiveScene().name));
     }
     IEnumerator FadeOutAndLoad(string sceneName)

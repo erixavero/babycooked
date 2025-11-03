@@ -23,8 +23,14 @@ public class DirtyDiaper : Consumable
             }
             else
             {
+                Debug.Log("Did not drop in trash bin");
                 BabyToBeCleaned.instance.SetBabySprite("WearingDirtyDiaper");
             }
+        }
+        else
+        {
+            Debug.Log("Did not drop in trash bin");
+            BabyToBeCleaned.instance.SetBabySprite("WearingDirtyDiaper");
         }
         Destroy(gameObject);
     }
